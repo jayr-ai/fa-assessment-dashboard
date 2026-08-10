@@ -4,16 +4,23 @@ React app for Freedom Academy's assessment results: a management **Overview** (`
 per-agent **personal view** (`/login` → `/my-assessment`) gated by real username/password login,
 replacing the old hand-cloned-per-agent Looker Studio reports.
 
-**Live**: https://jayr-ai.github.io/fa-assessment-dashboard/
-Repo: [jayr-ai/fa-assessment-dashboard](https://github.com/jayr-ai/fa-assessment-dashboard)
+**Live**: https://freedomacademy.azdigitalph.com/assessment/ (a card on the Freedom Academy dashboard
+hub, alongside Sales Dashboard / Meta Ads Report / Revenue Dashboard)
+Source repo: [jayr-ai/fa-assessment-dashboard](https://github.com/jayr-ai/fa-assessment-dashboard)
+Deployed frontend lives in: [jayr-ai/au-fa-dashboard](https://github.com/jayr-ai/au-fa-dashboard)`/assessment/`
+
+> This repo does **not** deploy its own GitHub Pages site — that was retired once this moved onto
+> the shared Freedom Academy hub domain (see "Deploying" below for why, and how to redeploy).
 
 ## Status: fully deployed, not yet live to real agents
 
 - **Data**: real, sourced from the `AssessmentDash` tab of the "Freedom Assessment Tracker" sheet,
   synced to [`data/assessments.json`](data/assessments.json) in this repo by an Apps Script the sheet
   owner runs — see [APPS_SCRIPT_SETUP.md](APPS_SCRIPT_SETUP.md).
-- **Hosting**: the frontend is a static build on **GitHub Pages**; the login-gated API is a
-  **Cloudflare Worker**. No Railway anywhere in this stack, by design.
+- **Hosting**: the frontend is a static build, deployed as a subfolder of the `au-fa-dashboard` repo
+  so it can live on the existing `freedomacademy.azdigitalph.com` custom domain (GitHub Pages
+  custom domains are one-per-repo, and that domain already belongs to `au-fa-dashboard`'s hub page).
+  The login-gated API is a **Cloudflare Worker**. No Railway anywhere in this stack, by design.
 - **Login**: real bcrypt-backed auth against Cloudflare KV, but credentials are dev-seeded
   (`npm run seed -- --remote`), not yet a real onboarding flow — see "Still open" below.
 
@@ -23,22 +30,22 @@ Repo: [jayr-ai/fa-assessment-dashboard](https://github.com/jayr-ai/fa-assessment
 Google Sheet (AssessmentDash tab)
    │  Apps Script: onChange trigger + 30-min fallback (see APPS_SCRIPT_SETUP.md)
    ▼
-data/assessments.json  in this GitHub repo
+data/assessments.json  in this GitHub repo (jayr-ai/fa-assessment-dashboard)
    │
    ├─→ fetched directly by the frontend for /overview (public data, no backend needed)
    │
    └─→ fetched by the Cloudflare Worker (60s cache) to answer /me/assessment
                                                               │
-GitHub Pages (static React build)  ──login/logout/me──►  Cloudflare Worker (fa-assessment-api)
-  https://jayr-ai.github.io/fa-assessment-dashboard/         https://fa-assessment-api.jayr-ai.workers.dev
+freedomacademy.azdigitalph.com/assessment/  ──login/logout/me──►  Cloudflare Worker (fa-assessment-api)
+  (static build, deployed into jayr-ai/au-fa-dashboard)              fa-assessment-api.jayr-ai.workers.dev
                                                               │
                                                         Cloudflare KV
                                                         (SESSIONS, CREDENTIALS)
 ```
 
-Nothing here needs an always-on server: GitHub Pages is static hosting, and the Worker only runs
-per-request on Cloudflare's edge. `/overview` doesn't touch the Worker at all — it's open data, so
-the frontend reads `data/assessments.json` straight from GitHub.
+Nothing here needs an always-on server: it's static hosting, and the Worker only runs per-request on
+Cloudflare's edge. `/overview` doesn't touch the Worker at all — it's open data, so the frontend reads
+`data/assessments.json` straight from GitHub.
 
 ## How to run it locally
 
@@ -48,7 +55,8 @@ npm run seed          # seeds LOCAL wrangler KV simulation (safe default, no Clo
 npm run dev:all        # Vite frontend (5185) + `wrangler dev` Worker simulation (8787) together
 ```
 
-Then open http://localhost:5185/fa-assessment-dashboard/.
+Then open http://localhost:5185/assessment/ (the dev server still serves at the `/assessment/` base
+path, matching production, even though nothing's actually nested under a hub locally).
 
 `npm run seed` pulls agents from the live `data/assessments.json` in GitHub, so it needs that file to
 already exist (i.e. the Apps Script has synced at least once — see
@@ -63,10 +71,19 @@ npm run dev:worker    # Worker only, http://localhost:8787 (local KV simulation)
 
 ## Deploying
 
-**Frontend** — automatic. `.github/workflows/deploy-pages.yml` builds and deploys to GitHub Pages on
-every push to `main` (except commits that only touch `data/**`, i.e. the Apps Script's own syncs).
-The build reads the `VITE_WORKER_URL` repo variable (Settings → Secrets and variables → Actions →
-Variables) to know where the Worker lives.
+**Frontend** — manual, since it deploys into a *different* repo (`au-fa-dashboard`) than this one.
+There's no cross-repo CI for this (would need a PAT with write access to that repo stored as a
+secret here — not worth it for how rarely this needs a redeploy):
+
+```bash
+VITE_WORKER_URL="https://fa-assessment-api.jayr-ai.workers.dev" npm run build
+rm -rf ../au-fa-dashboard/assessment
+cp -r dist ../au-fa-dashboard/assessment
+cd ../au-fa-dashboard && git add assessment/ && git commit -m "Update Assessment Dashboard" && git push
+```
+
+(adjust the relative path if your local clones aren't siblings). This repo's own GitHub Pages is
+disabled — don't re-enable it, `freedomacademy.azdigitalph.com/assessment/` is the one canonical URL.
 
 **Worker** — manual, from your machine:
 
