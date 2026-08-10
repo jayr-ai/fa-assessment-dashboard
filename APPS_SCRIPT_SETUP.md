@@ -22,6 +22,9 @@ The script needs a token that can write to just this one repo.
    [`apps-script/SyncAssessmentsToGitHub.gs`](apps-script/SyncAssessmentsToGitHub.gs) from this repo.
 4. Save the project (any name is fine, e.g. "Sync to GitHub").
 
+The script opens the spreadsheet by ID (`SpreadsheetApp.openById(...)`), so it works whether this
+project is container-bound to the sheet or a standalone project — no dependency on `getActive()`.
+
 ## 3. Set the script properties
 
 Still in the Apps Script editor: **Project Settings (gear icon) → Script Properties → Add script property**, three times:

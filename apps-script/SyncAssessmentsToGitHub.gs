@@ -1,9 +1,11 @@
 /**
  * FA Assessment Dashboard — sync AssessmentDash to GitHub as JSON.
  *
- * Paste this whole file into: Extensions > Apps Script, on the "Freedom Assessment Tracker"
- * spreadsheet. Then run setupTriggers() once (Run menu -> setupTriggers) and approve the
- * permission prompts. See ../APPS_SCRIPT_SETUP.md for the full walkthrough.
+ * Paste this whole file into an Apps Script project (either via Extensions > Apps Script on the
+ * "Freedom Assessment Tracker" spreadsheet, or a standalone project — it opens the spreadsheet by
+ * ID either way, so it doesn't need to be container-bound). Then run setupTriggers() once (function
+ * dropdown -> setupTriggers -> Run) and approve the permission prompts. See
+ * ../APPS_SCRIPT_SETUP.md for the full walkthrough.
  *
  * Column layout this expects on the "AssessmentDash" tab (confirmed 2026-08-10):
  *   A Last Updated | B Name | C Email | D Total Quiz Score | E Call IQ Test Score
@@ -14,6 +16,7 @@
  *   P DataStudio Link (not synced)
  */
 
+var SPREADSHEET_ID = '19M1bPihRjYwr6dttvMNuKBJWSVONU3m21Dy38p78k4k';
 var SHEET_NAME = 'AssessmentDash';
 var JSON_PATH = 'data/assessments.json';
 
@@ -40,7 +43,7 @@ function str_(value) {
 }
 
 function buildAssessmentsJson_() {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+  var sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
   if (!sheet) throw new Error('Sheet tab "' + SHEET_NAME + '" not found.');
 
   var values = sheet.getDataRange().getValues();
@@ -148,7 +151,7 @@ function setupTriggers() {
   });
 
   ScriptApp.newTrigger('syncAssessmentsToGitHub')
-    .forSpreadsheet(SpreadsheetApp.getActive())
+    .forSpreadsheet(SpreadsheetApp.openById(SPREADSHEET_ID))
     .onChange()
     .create();
 
