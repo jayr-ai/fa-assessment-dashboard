@@ -4,6 +4,7 @@ import { Banner } from '../components/Banner';
 import { RatingBadge } from '../components/RatingBadge';
 import { fetchMyAssessment, logout, type OverviewAgent } from '../api/client';
 import type { AssessmentCardDetail } from '../data/types';
+import { formatScore } from '../utils/format';
 
 const ASSESSMENT_CONFIG = [
   {
@@ -47,7 +48,7 @@ function AssessmentCard({
     <div className="assessment-card">
       <div className="assessment-score-tile">
         <div className={score === null ? 'assessment-score-blank' : 'assessment-score-value'}>
-          {score === null ? '–' : score}
+          {formatScore(score)}
         </div>
         <div className="assessment-score-caption">Total Score</div>
       </div>
@@ -98,7 +99,7 @@ export function MyAssessment() {
       <div className="page-body">
         <div className="score-summary-row">
           <div className="summary-card">
-            <div className="summary-score">{agent.overallScore}</div>
+            <div className="summary-score">{formatScore(agent.overallScore)}</div>
             <div className="summary-score-label">Overall Assessment Score</div>
           </div>
           <div className="summary-card">

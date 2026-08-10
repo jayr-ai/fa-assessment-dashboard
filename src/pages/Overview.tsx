@@ -4,6 +4,7 @@ import { Banner } from '../components/Banner';
 import { RatingBadge } from '../components/RatingBadge';
 import { fetchOverview, type OverviewAgent } from '../api/client';
 import type { Rating } from '../data/types';
+import { formatScore } from '../utils/format';
 
 type SortDir = 'asc' | 'desc';
 
@@ -140,10 +141,10 @@ export function Overview() {
                           <span className="account-status account-status--pending">Not yet invited</span>
                         )}
                       </td>
-                      <td>{a.callIQScore}</td>
-                      <td>{a.totalQuizScore}</td>
-                      <td>{a.rolePlayScore === null ? '–' : a.rolePlayScore}</td>
-                      <td className="overall-score-cell">{a.overallScore}</td>
+                      <td>{formatScore(a.callIQScore)}</td>
+                      <td>{formatScore(a.totalQuizScore)}</td>
+                      <td>{formatScore(a.rolePlayScore)}</td>
+                      <td className="overall-score-cell">{formatScore(a.overallScore)}</td>
                     </tr>
                   ))}
                 </tbody>
