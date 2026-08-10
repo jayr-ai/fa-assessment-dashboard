@@ -15,5 +15,5 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["server/**/*.ts", "src/data/types.ts"]
+  "include": ["scripts/**/*.ts", "src/data/types.ts"]
 }

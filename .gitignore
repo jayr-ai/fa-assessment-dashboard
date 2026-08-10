@@ -23,6 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
-# Mock credentials (never commit, even in mock phase)
+# Credentials (never commit)
 seed-credentials.txt
-server/data/credentials.json
+
+# Wrangler local dev state (local KV simulation, cache)
+.wrangler/
+worker/.dev.vars

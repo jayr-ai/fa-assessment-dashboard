@@ -1,0 +1,17 @@
+name = "fa-assessment-api"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+LIVE_DATA_URL = "https://raw.githubusercontent.com/jayr-ai/fa-assessment-dashboard/main/data/assessments.json"
+
+# Run `wrangler kv namespace create SESSIONS` and `wrangler kv namespace create CREDENTIALS`,
+# then paste the returned ids below before deploying. See ../APPS_SCRIPT_SETUP.md / README.
+[[kv_namespaces]]
+binding = "SESSIONS"
+id = "REPLACE_WITH_SESSIONS_KV_ID"
+
+[[kv_namespaces]]
+binding = "CREDENTIALS"
+id = "REPLACE_WITH_CREDENTIALS_KV_ID"

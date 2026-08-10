@@ -5,26 +5,25 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:api": "tsx watch server/index.ts",
-    "dev:all": "concurrently -n web,api -c blue,green \"npm:dev\" \"npm:dev:api\"",
-    "seed": "tsx server/seed.ts",
+    "dev:worker": "cd worker && wrangler dev",
+    "dev:all": "concurrently -n web,api -c blue,green \"npm:dev\" \"npm:dev:worker\"",
+    "seed": "tsx scripts/seed.ts",
+    "worker:deploy": "cd worker && wrangler deploy",
+    "worker:kv:create": "cd worker && wrangler kv namespace create SESSIONS && wrangler kv namespace create CREDENTIALS",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
-    "cors": "^2.8.6",
-    "express": "^5.2.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.2",
     "recharts": "^3.10.1"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260810.1",
     "@types/bcryptjs": "^2.4.6",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
@@ -33,6 +32,7 @@
     "oxlint": "^1.75.0",
     "tsx": "^4.23.11",
     "typescript": "~6.0.2",
-    "vite": "^8.2.0"
+    "vite": "^8.2.0",
+    "wrangler": "^4.120.0"
   }
 }
