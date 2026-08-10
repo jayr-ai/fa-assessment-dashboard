@@ -58,14 +58,19 @@ It also runs one sync immediately, so `data/assessments.json` should appear in t
 curl https://raw.githubusercontent.com/jayr-ai/fa-assessment-dashboard/main/data/assessments.json
 ```
 
-Should return the full agent list. Then, in the dashboard project:
+Should return the full agent list. The live site (https://jayr-ai.github.io/fa-assessment-dashboard/)
+fetches this same URL directly for `/overview` — no rebuild needed, it picks up new syncs
+automatically. `/my-assessment` results depend on the Cloudflare Worker's KV credentials being
+re-seeded after a roster change — see the README's "Deploying" section for `npm run seed -- --remote`.
+
+For local dev against this data:
 
 ```bash
 npm run seed && npm run dev:all
 ```
 
-`npm run seed` now pulls real agents (and real emails) from this live JSON instead of the old mock
-data — check `seed-credentials.txt` for real login usernames.
+`npm run seed` pulls real agents (and real emails) from this live JSON — check `seed-credentials.txt`
+for real login usernames.
 
 ## Re-running / changing things later
 
