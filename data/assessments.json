@@ -1,0 +1,379 @@
+[
+  {
+    "id": "briony-evans",
+    "name": "Briony Evans",
+    "email": "briony@beingactivefitness.com.au",
+    "overallRating": "MASTERY IN MOTION",
+    "overallRemarks": "You are not there yet. Go back, do the work, and re-sit.",
+    "callIQScore": 0,
+    "totalQuizScore": 98.33333333333333,
+    "rolePlayScore": null,
+    "overallScore": 39.33333333333333,
+    "accountProvisioned": true,
+    "cards": {
+      "callIQ": {
+        "rating": "MASTERY IN MOTION",
+        "remarks": null,
+        "isPlaceholder": false
+      },
+      "acceleratorCheck": {
+        "rating": "DISTINCTION",
+        "remarks": "You didn't just watch it. You absorbed it.",
+        "isPlaceholder": false
+      },
+      "rolePlayProficiency": {
+        "rating": null,
+        "remarks": null,
+        "isPlaceholder": false
+      }
+    }
+  },
+  {
+    "id": "david-thorpe",
+    "name": "David Thorpe",
+    "email": "david.thorpe@talkingwithnumbers.com",
+    "overallRating": "PASS",
+    "overallRemarks": "You have earned your place. Keep refining.",
+    "callIQScore": 0,
+    "totalQuizScore": 94.16666666666667,
+    "rolePlayScore": 92,
+    "overallScore": 83.66666666666667,
+    "accountProvisioned": true,
+    "cards": {
+      "callIQ": {
+        "rating": "MASTERY IN MOTION",
+        "remarks": null,
+        "isPlaceholder": false
+      },
+      "acceleratorCheck": {
+        "rating": "DISTINCTION",
+        "remarks": "You didn't just watch it. You absorbed it.",
+        "isPlaceholder": false
+      },
+      "rolePlayProficiency": {
+        "rating": "DISTINCTION",
+        "remarks": "You performed like someone ready for a live prospect.",
+        "isPlaceholder": false
+      }
+    }
+  },
+  {
+    "id": "jason-besters",
+    "name": "Jason Besters",
+    "email": "jasonbesters@gmail.com",
+    "overallRating": "PASS",
+    "overallRemarks": "You have earned your place. Keep refining.",
+    "callIQScore": 0,
+    "totalQuizScore": 96.66666666666667,
+    "rolePlayScore": 87,
+    "overallScore": 82.16666666666666,
+    "accountProvisioned": true,
+    "cards": {
+      "callIQ": {
+        "rating": "MASTERY IN MOTION",
+        "remarks": null,
+        "isPlaceholder": false
+      },
+      "acceleratorCheck": {
+        "rating": "DISTINCTION",
+        "remarks": "You didn't just watch it. You absorbed it.",
+        "isPlaceholder": false
+      },
+      "rolePlayProficiency": {
+        "rating": "DISTINCTION",
+        "remarks": "You performed like someone ready for a live prospect.",
+        "isPlaceholder": false
+      }
+    }
+  },
+  {
+    "id": "jayvee-respeto",
+    "name": "Jayvee Respeto",
+    "email": "jayvee.respeto@miyagi.coach",
+    "overallRating": "DISTINCTION",
+    "overallRemarks": "You are ready!",
+    "callIQScore": 100,
+    "totalQuizScore": 100,
+    "rolePlayScore": 88,
+    "overallScore": 94,
+    "accountProvisioned": true,
+    "cards": {
+      "callIQ": {
+        "rating": "DISTINCTION",
+        "remarks": null,
+        "isPlaceholder": false
+      },
+      "acceleratorCheck": {
+        "rating": "DISTINCTION",
+        "remarks": "You didn't just watch it. You absorbed it.",
+        "isPlaceholder": false
+      },
+      "rolePlayProficiency": {
+        "rating": "DISTINCTION",
+        "remarks": "You performed like someone ready for a live prospect.",
+        "isPlaceholder": false
+      }
+    }
+  },
+  {
+    "id": "jeremie-bradshaw",
+    "name": "Jeremie Bradshaw",
+    "email": "jeremie@jrco.com.au",
+    "overallRating": "MASTERY IN MOTION",
+    "overallRemarks": "You are not there yet. Go back, do the work, and re-sit.",
+    "callIQScore": 0,
+    "totalQuizScore": 100,
+    "rolePlayScore": null,
+    "overallScore": 40,
+    "accountProvisioned": true,
+    "cards": {
+      "callIQ": {
+        "rating": "MASTERY IN MOTION",
+        "remarks": null,
+        "isPlaceholder": false
+      },
+      "acceleratorCheck": {
+        "rating": "DISTINCTION",
+        "remarks": "You didn't just watch it. You absorbed it.",
+        "isPlaceholder": false
+      },
+      "rolePlayProficiency": {
+        "rating": null,
+        "remarks": null,
+        "isPlaceholder": false
+      }
+    }
+  },
+  {
+    "id": "joey-test",
+    "name": "Joey test",
+    "email": "joey.wong@freedomacademy.com.au",
+    "overallRating": "MASTERY IN MOTION",
+    "overallRemarks": "You are not there yet. Go back, do the work, and re-sit.",
+    "callIQScore": 90,
+    "totalQuizScore": 30,
+    "rolePlayScore": 80,
+    "overallScore": 61,
+    "accountProvisioned": true,
+    "cards": {
+      "callIQ": {
+        "rating": "DISTINCTION",
+        "remarks": null,
+        "isPlaceholder": false
+      },
+      "acceleratorCheck": {
+        "rating": "MASTERY IN MOTION",
+        "remarks": "You're still building the foundation. Go back to the chapters you struggled with and re-sit before moving forward.",
+        "isPlaceholder": false
+      },
+      "rolePlayProficiency": {
+        "rating": "PASS",
+        "remarks": "The foundation is there. Gaps to close, but you've earned your place.",
+        "isPlaceholder": false
+      }
+    }
+  },
+  {
+    "id": "joey-wong",
+    "name": "Joey wong",
+    "email": "wcsjoey@yahoo.com",
+    "overallRating": "MASTERY IN MOTION",
+    "overallRemarks": "You are not there yet. Go back, do the work, and re-sit.",
+    "callIQScore": 0,
+    "totalQuizScore": 64.16666666666667,
+    "rolePlayScore": null,
+    "overallScore": 25.666666666666668,
+    "accountProvisioned": true,
+    "cards": {
+      "callIQ": {
+        "rating": "MASTERY IN MOTION",
+        "remarks": null,
+        "isPlaceholder": false
+      },
+      "acceleratorCheck": {
+        "rating": "MASTERY IN MOTION",
+        "remarks": "You're still building the foundation. Go back to the chapters you struggled with and re-sit before moving forward.",
+        "isPlaceholder": false
+      },
+      "rolePlayProficiency": {
+        "rating": null,
+        "remarks": null,
+        "isPlaceholder": false
+      }
+    }
+  },
+  {
+    "id": "michelle-libert",
+    "name": "Michelle Libert",
+    "email": "michlibert@outlook.com",
+    "overallRating": "PASS",
+    "overallRemarks": "You have earned your place. Keep refining.",
+    "callIQScore": 0,
+    "totalQuizScore": 99.16666666666667,
+    "rolePlayScore": 87,
+    "overallScore": 83.16666666666667,
+    "accountProvisioned": true,
+    "cards": {
+      "callIQ": {
+        "rating": "MASTERY IN MOTION",
+        "remarks": null,
+        "isPlaceholder": false
+      },
+      "acceleratorCheck": {
+        "rating": "DISTINCTION",
+        "remarks": "You didn't just watch it. You absorbed it.",
+        "isPlaceholder": false
+      },
+      "rolePlayProficiency": {
+        "rating": "DISTINCTION",
+        "remarks": "You performed like someone ready for a live prospect.",
+        "isPlaceholder": false
+      }
+    }
+  },
+  {
+    "id": "nate-jones",
+    "name": "Nate Jones",
+    "email": "nategingerjones@gmail.com",
+    "overallRating": "PASS",
+    "overallRemarks": "You have earned your place. Keep refining.",
+    "callIQScore": 0,
+    "totalQuizScore": 98.33333333333333,
+    "rolePlayScore": 68,
+    "overallScore": 73.33333333333333,
+    "accountProvisioned": true,
+    "cards": {
+      "callIQ": {
+        "rating": "MASTERY IN MOTION",
+        "remarks": null,
+        "isPlaceholder": false
+      },
+      "acceleratorCheck": {
+        "rating": "DISTINCTION",
+        "remarks": "You didn't just watch it. You absorbed it.",
+        "isPlaceholder": false
+      },
+      "rolePlayProficiency": {
+        "rating": "MASTERY IN MOTION",
+        "remarks": "The frameworks aren't second nature yet. More reps required before you go live.",
+        "isPlaceholder": false
+      }
+    }
+  },
+  {
+    "id": "nelson-lopera",
+    "name": "Nelson Lopera",
+    "email": "nelcorpservices@gmail.com",
+    "overallRating": "PASS",
+    "overallRemarks": "You have earned your place. Keep refining.",
+    "callIQScore": 0,
+    "totalQuizScore": 94.16666666666667,
+    "rolePlayScore": 93,
+    "overallScore": 84.16666666666667,
+    "accountProvisioned": true,
+    "cards": {
+      "callIQ": {
+        "rating": "MASTERY IN MOTION",
+        "remarks": null,
+        "isPlaceholder": false
+      },
+      "acceleratorCheck": {
+        "rating": "DISTINCTION",
+        "remarks": "You didn't just watch it. You absorbed it.",
+        "isPlaceholder": false
+      },
+      "rolePlayProficiency": {
+        "rating": "DISTINCTION",
+        "remarks": "You performed like someone ready for a live prospect.",
+        "isPlaceholder": false
+      }
+    }
+  },
+  {
+    "id": "nik-toth",
+    "name": "Nik Toth",
+    "email": "nikolett.toth@miyagi.coach",
+    "overallRating": "MASTERY IN MOTION",
+    "overallRemarks": "You are not there yet. Go back, do the work, and re-sit.",
+    "callIQScore": 0,
+    "totalQuizScore": 7.5,
+    "rolePlayScore": null,
+    "overallScore": 3,
+    "accountProvisioned": true,
+    "cards": {
+      "callIQ": {
+        "rating": "MASTERY IN MOTION",
+        "remarks": null,
+        "isPlaceholder": false
+      },
+      "acceleratorCheck": {
+        "rating": "MASTERY IN MOTION",
+        "remarks": "You're still building the foundation. Go back to the chapters you struggled with and re-sit before moving forward.",
+        "isPlaceholder": false
+      },
+      "rolePlayProficiency": {
+        "rating": null,
+        "remarks": null,
+        "isPlaceholder": false
+      }
+    }
+  },
+  {
+    "id": "renee-beal",
+    "name": "Renee Beal",
+    "email": "renee.crystalhealing@gmail.com",
+    "overallRating": "MASTERY IN MOTION",
+    "overallRemarks": "You are not there yet. Go back, do the work, and re-sit.",
+    "callIQScore": 0,
+    "totalQuizScore": 100,
+    "rolePlayScore": null,
+    "overallScore": 40,
+    "accountProvisioned": true,
+    "cards": {
+      "callIQ": {
+        "rating": "MASTERY IN MOTION",
+        "remarks": null,
+        "isPlaceholder": false
+      },
+      "acceleratorCheck": {
+        "rating": "DISTINCTION",
+        "remarks": "You didn't just watch it. You absorbed it.",
+        "isPlaceholder": false
+      },
+      "rolePlayProficiency": {
+        "rating": null,
+        "remarks": null,
+        "isPlaceholder": false
+      }
+    }
+  },
+  {
+    "id": "russell-keddie",
+    "name": "Russell Keddie",
+    "email": "rustyrover72@yahoo.com.au",
+    "overallRating": "MASTERY IN MOTION",
+    "overallRemarks": "You are not there yet. Go back, do the work, and re-sit.",
+    "callIQScore": 0,
+    "totalQuizScore": 90,
+    "rolePlayScore": null,
+    "overallScore": 36,
+    "accountProvisioned": true,
+    "cards": {
+      "callIQ": {
+        "rating": "MASTERY IN MOTION",
+        "remarks": null,
+        "isPlaceholder": false
+      },
+      "acceleratorCheck": {
+        "rating": "DISTINCTION",
+        "remarks": "You didn't just watch it. You absorbed it.",
+        "isPlaceholder": false
+      },
+      "rolePlayProficiency": {
+        "rating": null,
+        "remarks": null,
+        "isPlaceholder": false
+      }
+    }
+  }
+]
