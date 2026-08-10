@@ -82,9 +82,18 @@ export CLOUDFLARE_API_TOKEN=...
 npm run seed -- --remote
 ```
 
-This writes hashed credentials straight into the production `CREDENTIALS` KV namespace and prints
-plaintext once to `seed-credentials.txt` (gitignored) — without `--remote` it targets the local
-wrangler simulation instead, which is the safe default for iterating.
+This is **idempotent** — it only creates credentials for agents who don't already have one, and
+leaves everyone else's password untouched. Run it any time the sheet gets a new agent; existing
+agents are silently skipped, not regenerated (regenerating everyone on every run would invalidate
+passwords you've already handed out). Newly-created plaintext is appended to `seed-credentials.txt`
+(gitignored) — agents who already existed aren't listed, since we don't (and shouldn't) know their
+existing plaintext. Without `--remote` it targets the local wrangler simulation instead, the safe
+default for iterating.
+
+**Current process for getting agents their login**: run `npm run seed -- --remote` after a new agent
+takes the assessment, then manually send that agent their username/password from
+`seed-credentials.txt` (email, Slack, text — whatever channel). No auto-delivery yet; see "Still
+open" below.
 
 ### One-time Cloudflare setup (already done for this project, kept here for reference)
 
@@ -117,11 +126,14 @@ per rating tier) resolved almost every unknown flagged in the original mock-phas
 
 ## Still open
 
-1. **`/overview` has no login gate**, matching current Looker-by-link behavior. Still easy to add
-   later.
-2. **Login credentials are still dev-seeded, not a real onboarding flow.** Username = real email,
-   password = randomly generated each time `npm run seed` runs. Where/how real credentials get
-   created or reset for agents is still undecided.
+1. ~~`/overview` login gate~~ — **resolved 2026-08-10, user confirmed no gate needed.** Stays open,
+   matching current Looker-by-link behavior. Not revisiting unless requirements change.
+2. **Credential delivery is manual, by design for now** (user decision 2026-08-10): after
+   `npm run seed -- --remote` creates a new agent's account, you personally send them their
+   username/password via whatever channel (email/Slack/text). No auto-delivery. Revisit if this
+   stops scaling — options considered were auto-email (needs a mail service like Resend) or
+   GoHighLevel (reuses existing CRM/messaging infra) — both are still on the table if manual sending
+   becomes a bottleneck.
 3. **Rating thresholds still aren't derivable from anything visible** — moot for rendering (ratings
    are sheet-stored, not computed), but relevant if you ever need to sanity-check a borderline score.
 4. **Sessions are token-based** (Bearer token in `localStorage`, stored in Cloudflare KV with a 24h
@@ -129,9 +141,8 @@ per rating tier) resolved almost every unknown flagged in the original mock-phas
 
 ## Before this goes live to any real agent
 
-1. Decide where real agent credentials get created/reset (see "Still open" #2) — right now anyone
-   with the Cloudflare API token can run `npm run seed -- --remote` and read the plaintext.
-2. Decide whether `/overview` needs a gate (see "Still open" #1).
-3. Watch the Apps Script's **Executions** log for a while to confirm syncs are actually landing.
-4. Reconcile a few real agents' dashboard views against what they'd expect, since this is the first
+1. Watch the Apps Script's **Executions** log for a while to confirm syncs are actually landing.
+2. Reconcile a few real agents' dashboard views against what they'd expect, since this is the first
    time this data has been rendered outside of Looker Studio.
+3. Otherwise this is ready — data pipeline, auth, hosting, and the credential-issuance process are
+   all decided and working.
