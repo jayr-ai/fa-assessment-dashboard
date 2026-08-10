@@ -141,7 +141,7 @@
   background: var(--fa-card-bg);
   border: 1px solid var(--fa-border);
   border-radius: 10px;
-  overflow: hidden;
+  overflow-x: auto;
 }
 
 table {
