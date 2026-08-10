@@ -6,12 +6,11 @@ compatibility_flags = ["nodejs_compat"]
 [vars]
 LIVE_DATA_URL = "https://raw.githubusercontent.com/jayr-ai/fa-assessment-dashboard/main/data/assessments.json"
 
-# Run `wrangler kv namespace create SESSIONS` and `wrangler kv namespace create CREDENTIALS`,
-# then paste the returned ids below before deploying. See ../APPS_SCRIPT_SETUP.md / README.
+# KV namespaces (created 2026-08-10 via `npm run worker:kv:create`).
 [[kv_namespaces]]
 binding = "SESSIONS"
-id = "REPLACE_WITH_SESSIONS_KV_ID"
+id = "87cf515e8af0433c8fa74d60ab15ac83"
 
 [[kv_namespaces]]
 binding = "CREDENTIALS"
-id = "REPLACE_WITH_CREDENTIALS_KV_ID"
+id = "7ac79d2eecf34a85b964c1f896a3d932"
