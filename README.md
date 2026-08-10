@@ -1,107 +1,115 @@
-# FA Assessment Dashboard (Phase 1 — mock data, real login)
+# FA Assessment Dashboard
 
-Rebuild of Freedom Academy's Data Studio assessment report as a standalone React app:
-a management **Overview** (`/overview`) and a per-agent **personal view** (`/login` → `/my-assessment`)
-gated by real username/password login instead of hand-cloned Looker reports.
+React app for Freedom Academy's assessment results: a management **Overview** (`/overview`) and a
+per-agent **personal view** (`/login` → `/my-assessment`) gated by real username/password login,
+replacing the old hand-cloned-per-agent Looker Studio reports.
 
-**This phase is UI-first with mock data.** Nothing here talks to the real Google Sheet yet — see
-"Where the real data wiring goes next" at the bottom.
+Repo: [jayr-ai/fa-assessment-dashboard](https://github.com/jayr-ai/fa-assessment-dashboard)
+
+## Status: live data wired, not yet live to real agents
+
+- **Data**: real, sourced from the `AssessmentDash` tab of the "Freedom Assessment Tracker" sheet,
+  synced to [`data/assessments.json`](data/assessments.json) in this repo by an Apps Script the sheet
+  owner runs — see [APPS_SCRIPT_SETUP.md](APPS_SCRIPT_SETUP.md). The Express API fetches that file
+  live (60s cache) instead of reading a mock module.
+- **Login**: real bcrypt-backed auth, but credentials are dev-seeded (`npm run seed`), not yet
+  a real onboarding flow — see "Still open" below before any real agent gets a login.
+- `src/data/mockAssessments.ts` is no longer used by the running app — it's kept only as an offline
+  fixture / reference for the original 13-row snapshot this project started from.
 
 ## How to run it locally
 
 ```bash
 npm install
-npm run seed     # generates hashed mock accounts + prints plaintext creds once
-npm run dev:all   # starts the Vite frontend (5185) and the Express API (4001) together
+npm run seed      # pulls live agents from GitHub, generates + hashes login passwords, prints them once
+npm run dev:all    # Vite frontend (5185) + Express API (4001) together
 ```
 
 Then open http://localhost:5185/overview or http://localhost:5185/login.
 
-Individual pieces, if you want them separate:
+`npm run seed` requires `data/assessments.json` to already exist in the GitHub repo (i.e. the Apps
+Script has run at least once — see [APPS_SCRIPT_SETUP.md](APPS_SCRIPT_SETUP.md)). If it 404s, that
+script hasn't synced yet.
+
+Individual pieces:
 
 ```bash
 npm run dev       # frontend only, http://localhost:5185
 npm run dev:api   # backend only, http://localhost:4001
 ```
 
-`npm run seed` must be run at least once before the API will start — it generates
-`server/data/credentials.json` (bcrypt hashes) that the API reads at boot.
+## Where the data actually lives
 
-## Where the mock data and credentials live
+```
+Google Sheet (AssessmentDash tab)
+   │  Apps Script: onChange trigger + 30-min fallback (see APPS_SCRIPT_SETUP.md)
+   ▼
+data/assessments.json  in this GitHub repo
+   │  fetched live by the Express API (server/data/liveSource.ts), 60s in-memory cache
+   ▼
+/management/overview, /me/assessment  →  React frontend
+```
 
-- `src/data/mockAssessments.ts` — the 13-agent dataset (shape mirrors the real `AssessmentDash`
-  sheet columns), plus the per-assessment card config. Fed to both `/overview` and `/my-assessment`
-  via the API — the frontend never has direct access to any agent's record except its own.
-- `src/data/types.ts` — shared types, rating colors, and the canned overall-rating remarks.
-- `server/seed.ts` — generates one random password per agent, bcrypt-hashes it, writes hashes to
-  `server/data/credentials.json` (gitignored) and prints the plaintext **once** to the console and to
-  `seed-credentials.txt` (gitignored, repo root) so you can test logins. No plaintext password is ever
-  written into the mock data file itself.
-- `server/index.ts` — the Express API: `/login`, `/logout`, `/me/assessment` (auth-gated), and
-  `/management/overview` (open). Sessions are an in-memory `Map<token, agentId>` — restarting the API
-  invalidates all sessions, which is expected for a mock phase.
+- `apps-script/SyncAssessmentsToGitHub.gs` — paste-in script, run from the sheet's own Apps Script
+  editor (by the sheet owner, since authorizing it is a one-time OAuth click tied to their identity).
+  Column mapping is documented at the top of that file.
+- `server/data/liveSource.ts` — fetches and caches `data/assessments.json` from GitHub raw content.
+  Override with `LIVE_DATA_URL` (or `LIVE_DATA_REPO` / `LIVE_DATA_BRANCH`) env vars if needed.
+- `server/seed.ts` — reads the same live source to generate login credentials
+  (`server/data/credentials.json`, gitignored) and prints plaintext once to `seed-credentials.txt`
+  (gitignored).
 
-Re-run `npm run seed` any time to rotate all mock passwords.
+## What the real sheet resolved (no longer placeholders)
 
-## Assumptions and placeholders (read before treating anything here as final)
+The original mock-phase build had several flagged unknowns. Pulling the real `AssessmentDash` tab
+(and its `REF` lookup tab, which holds the canned remark copy per rating tier) resolved almost all of
+them:
 
-These all come directly from open questions or explicit "don't guess" instructions in the build brief:
+- **Real emails** for the two previously-unconfirmed agents: David Thorpe is
+  `david.thorpe@talkingwithnumbers.com`; "Joey wong" is `wcsjoey@yahoo.com`.
+- **The "Joey test" name/email mismatch is real**, not a capture artifact — the sheet itself has
+  `joey.wong@freedomacademy.com.au` against the display name "Joey test."
+- **Overall Freedom Assessment Score is a real stored column** (`G`, "Overall Freedom Assessment
+  Score"), not a formula we need to infer — the mock phase's inferred
+  `0.10×CallIQ + 0.40×Quiz + 0.50×RolePlay` formula turned out to match it, but we now just read the
+  real value directly (e.g. David Thorpe: 83.67, not a rounded 84).
+- **Per-assessment Rating and Remarks are real, per-row sheet columns** (`J`/`K` for Call IQ, `L`/`M`
+  for Accelerator Check, `N`/`O` for Role Play), confirmed against the `REF` tab which holds the
+  canned remark text per assessment × rating tier. Every agent now gets real card copy — no more
+  `[TODO: confirm from sheet]` placeholders.
+- **Column M's header is confirmed**: "Assessment #2: Accelerator Check [Remarks]."
+- **Call IQ Test card now shows a Rating badge** (real data exists in column `J`) — this was a
+  deliberate change from the mock phase, made after confirming with the user that the old Looker
+  report's omission was just a rendering gap, not because the data doesn't exist. It still shows no
+  remarks, because the `REF` tab confirms Call IQ genuinely has no canned remark copy defined for any
+  tier — that part isn't a gap, it's how the source system is set up.
 
-1. **`/overview` has no login gate** — matches current Looker-by-link behavior. Deliberately left easy
-   to add later: a manager-password check would be one extra line in the `/management/overview` handler
-   in `server/index.ts`.
-2. **Login username = agent's sheet-column-C email, for this mock phase only.** Explicitly called out
-   as a placeholder decision in the brief, not final. Where real credentials will actually live (new
-   columns on `AssessmentDash` vs. a separate accounts sheet/table) is still undecided.
-3. **Two agents don't have a usable email**, so their seeded username is a synthetic placeholder
-   (`<slug>@todo-confirm-email.local`), flagged in `seed-credentials.txt`:
-   - **David Thorpe** — email domain was truncated in the source capture (`talkingwithnumbers.c…`).
-   - **Joey wong** — email wasn't captured at all (row was scrolled off-screen in the source pull).
-   Both must be re-issued real credentials once the real email is confirmed.
-4. **"Joey test"'s email** (`joey.wong@freedomacademy.com…`) is reproduced exactly as it appeared in
-   the sheet, including the mismatch with the display name "Joey test" — this looked like a
-   pre-existing data-quality quirk in the source, not something to silently "fix." Flagging per the brief.
-5. **Overall Freedom Assessment Score formula is inferred, not confirmed:**
-   `0.10 × Call IQ + 0.40 × Total Quiz + 0.50 × Role Play`, with the Role Play term dropped entirely
-   (not zeroed) when Role Play is blank. This reproduces every row in the source table exactly
-   (e.g. Nelson Lopera: 0.10×0 + 0.40×94 + 0.50×93 = 84.1 → 84; Briony Evans, Role Play blank:
-   0.10×0 + 0.40×98 = 39.2 → 39). Implemented in `computeOverallScore()` in `mockAssessments.ts`.
-   **Confirm against the actual sheet formula before treating this as ground truth.**
-6. **Overall Rating is hardcoded per agent**, not derived from a threshold function — the brief was
-   explicit that the exact PASS/DISTINCTION cutoffs aren't visible from the source pull, so nothing
-   here invents them.
-7. **Per-assessment (card-level) Rating/Remarks are only confirmed for David Thorpe** (Accelerator
-   Check and Role Play Proficiency, both DISTINCTION). All 12 other agents show a visible
-   `[TODO: confirm from sheet]` placeholder in amber italics on those two cards rather than guessing
-   at rating-tier copy that was never observed. The Call IQ Test card never shows a Rating/Remarks
-   section for any agent — that's replicated from the source, not an omission on our part; worth
-   confirming with the source's owner whether that's intentional or an unfinished widget upstream.
-8. **The "DataStudio Link" column is replaced with an account-status indicator** (`Account created` /
-   `Not yet invited`) instead of a literal "View personal dashboard" link. Reasoning: `/my-assessment`
-   is gated by the logged-in session and only ever shows *that* session's own record, so a link to it
-   from the Overview table couldn't actually deep-link to a specific agent's data without leaking
-   another agent's record — which is exactly the risk section 5.2 says to avoid. This is a judgment
-   call, not something observed in the source — push back if you'd rather have it work differently.
-9. **Sessions are token-based (Bearer token in `localStorage`), not cookie-based** — simplest fit for a
-   Vite dev client on one origin talking to an Express API on another during local dev.
-10. Column M's exact header text ("Assessment #2: Accelerator Check [Remarks]") is assumed by pattern
-    from columns K/O, not read directly — unconfirmed.
+## Still open (unchanged from the mock phase)
 
-## What's real vs. what's mock, right now
+1. **`/overview` has no login gate**, matching current Looker-by-link behavior. Still easy to add
+   later — a manager-password check would be one addition to the `/management/overview` handler.
+2. **Login credentials are still dev-seeded, not a real onboarding flow.** Username = email (now
+   real), password = randomly generated on each `npm run seed` run. Where real credentials will
+   actually be created/reset for agents is still undecided.
+3. **Rating thresholds are still not derivable from anything we can see** — Ratings are sheet-stored
+   values now (not something we compute), so this matters less than it did, but if you ever need to
+   validate a borderline score, the exact PASS/DISTINCTION cutoffs still aren't visible from the
+   sheet itself.
+4. **Sessions are token-based** (Bearer token in `localStorage`), not cookie-based.
 
-- Real: the login flow, session gating, bcrypt hashing, and the UI/layout.
-- Mock: all 13 agent records, all credentials, the overall-score formula, and every rating threshold.
+## What's real vs. what's still mock/dev-only
 
-## Where the real Google Sheets data wiring goes next
+- Real: the data pipeline (Sheet → Apps Script → GitHub JSON → API), the login flow, session gating,
+  bcrypt hashing, and the UI/layout.
+- Dev-only: the seeded login passwords (rotate every time `npm run seed` runs) and the lack of any
+  real credential-issuance workflow for agents.
 
-Everything currently reads from `src/data/mockAssessments.ts` via the two endpoints in
-`server/index.ts`. To go live:
+## Before this goes live to any real agent
 
-1. Replace `mockAssessments.ts` with a real read from the `Freedom Assessment Tracker` sheet,
-   `AssessmentDash` tab (Google Sheets API, or push through Apps Script → JSON, matching the pattern
-   used on the other AZ Digital dashboards).
-2. Reconcile every mock number and rating against a full sheet export — this build only spot-checked
-   13 rows from a screenshot, not a full pull.
-3. Decide where real agent credentials get created/reset (see assumption #2) and re-seed accordingly.
-4. Confirm the open items in assumptions #3, #4, #7, #10 with the sheet as source of truth before
-   any real agent logs in.
+1. Decide where real agent credentials get created/reset (see "Still open" #2) and build that flow —
+   right now anyone with shell access to this repo can run `npm run seed` and read the plaintext.
+2. Decide whether `/overview` needs a gate (see "Still open" #1).
+3. Watch the Apps Script's **Executions** log for a while to confirm syncs are actually landing
+   (Extensions → Apps Script → Executions, on the sheet).
+4. Reconcile a few real agents' dashboard views against what they'd expect, since this is the first
+   time this data has been rendered outside of Looker Studio.

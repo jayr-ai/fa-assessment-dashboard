@@ -5,8 +5,7 @@ import crypto from 'node:crypto';
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { mockAssessments, getAgentById } from '../src/data/mockAssessments';
-import { OVERALL_REMARKS } from '../src/data/types';
+import { loadLiveAssessments, findLiveAgentById } from './data/liveSource';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CREDENTIALS_PATH = path.join(__dirname, 'data', 'credentials.json');
@@ -25,20 +24,17 @@ interface Credential {
 
 const credentials: Credential[] = JSON.parse(readFileSync(CREDENTIALS_PATH, 'utf-8'));
 
-// Mock-phase session store: in-memory token -> agentId. Assumption (per README): token-based,
-// not cookie-based, since this is a plain Vite dev client talking to a separate API origin.
+// Session store: in-memory token -> agentId. Assumption (per README): token-based, not
+// cookie-based, since this is a plain Vite dev client talking to a separate API origin.
 const sessions = new Map<string, string>();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-function publicAgent(agent: ReturnType<typeof getAgentById>) {
-  if (!agent) return null;
-  return {
-    ...agent,
-    overallRemarks: OVERALL_REMARKS[agent.overallRating],
-  };
+function sendLiveDataError(res: express.Response, err: unknown) {
+  const message = err instanceof Error ? err.message : 'Failed to load live assessment data';
+  res.status(502).json({ error: message });
 }
 
 app.post('/login', async (req, res) => {
@@ -60,8 +56,12 @@ app.post('/login', async (req, res) => {
   const token = crypto.randomBytes(24).toString('hex');
   sessions.set(token, credential.agentId);
 
-  const agent = getAgentById(credential.agentId);
-  res.json({ token, agentName: agent?.name ?? null });
+  try {
+    const agent = await findLiveAgentById(credential.agentId);
+    res.json({ token, agentName: agent?.name ?? null });
+  } catch (err) {
+    sendLiveDataError(res, err);
+  }
 });
 
 app.post('/logout', (req, res) => {
@@ -80,24 +80,30 @@ function requireAuth(req: express.Request, res: express.Response): string | null
   return agentId;
 }
 
-app.get('/me/assessment', (req, res) => {
+app.get('/me/assessment', async (req, res) => {
   const agentId = requireAuth(req, res);
   if (!agentId) return;
-  const agent = getAgentById(agentId);
-  if (!agent) return res.status(404).json({ error: 'Record not found' });
-  res.json(publicAgent(agent));
+  try {
+    const agent = await findLiveAgentById(agentId);
+    if (!agent) return res.status(404).json({ error: 'Record not found' });
+    res.json(agent);
+  } catch (err) {
+    sendLiveDataError(res, err);
+  }
 });
 
 // Open access for now, matching current Looker-by-link behavior. See README section 6 —
 // adding a manager password gate later is a small addition to this one handler.
-app.get('/management/overview', (_req, res) => {
-  res.json({
-    agents: mockAssessments.map((a) => ({
-      ...a,
-      overallRemarks: OVERALL_REMARKS[a.overallRating],
-    })),
-    dataLastUpdated: new Date().toISOString(),
-  });
+app.get('/management/overview', async (_req, res) => {
+  try {
+    const agents = await loadLiveAssessments();
+    res.json({
+      agents,
+      dataLastUpdated: new Date().toISOString(),
+    });
+  } catch (err) {
+    sendLiveDataError(res, err);
+  }
 });
 
 const PORT = process.env.API_PORT ? Number(process.env.API_PORT) : 4001;
