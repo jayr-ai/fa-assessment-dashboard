@@ -119,13 +119,13 @@ export function Overview() {
                     <th className="sortable" onClick={() => setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'))}>
                       Name {sortDir === 'asc' ? '▲' : '▼'}
                     </th>
-                    <th>Overall Rating</th>
+                    <th>Overall<br />Rating</th>
                     <th>Overall Remarks</th>
-                    <th>Personal Dashboard</th>
-                    <th>Call IQ Test Score</th>
-                    <th>Total Quiz Score</th>
-                    <th>Role Play Proficiency Score</th>
-                    <th>Overall Freedom Assessment Score</th>
+                    <th>Personal<br />Dashboard</th>
+                    <th>Call IQ Test<br />Score</th>
+                    <th>Total Quiz<br />Score</th>
+                    <th>Role Play<br />Proficiency Score</th>
+                    <th>Overall Freedom<br />Assessment Score</th>
                   </tr>
                 </thead>
                 <tbody>
