@@ -351,12 +351,12 @@
     "id": "kristi-elder",
     "name": "Kristi Elder",
     "email": "kristi.elder82@gmail.com",
-    "overallRating": "MASTERY IN MOTION",
-    "overallRemarks": "You are not there yet. Go back, do the work, and re-sit.",
+    "overallRating": "DISTINCTION",
+    "overallRemarks": "You are ready!",
     "callIQScore": 100,
     "totalQuizScore": 99.16666666666667,
-    "rolePlayScore": null,
-    "overallScore": 49.66666666666667,
+    "rolePlayScore": 95.5,
+    "overallScore": 97.41666666666667,
     "accountProvisioned": true,
     "cards": {
       "callIQ": {
@@ -370,8 +370,8 @@
         "isPlaceholder": false
       },
       "rolePlayProficiency": {
-        "rating": null,
-        "remarks": null,
+        "rating": "DISTINCTION",
+        "remarks": "You performed like someone ready for a live prospect.",
         "isPlaceholder": false
       }
     }
