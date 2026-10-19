@@ -641,12 +641,12 @@
     "id": "sakthi-anu",
     "name": "Sakthi Anu",
     "email": "shaq.dream2win@gmail.com",
-    "overallRating": "MASTERY IN MOTION",
-    "overallRemarks": "You are not there yet. Go back, do the work, and re-sit.",
+    "overallRating": "PASS",
+    "overallRemarks": "You have earned your place. Keep refining.",
     "callIQScore": 100,
     "totalQuizScore": 97.5,
-    "rolePlayScore": null,
-    "overallScore": 49,
+    "rolePlayScore": 71.5,
+    "overallScore": 84.75,
     "accountProvisioned": true,
     "cards": {
       "callIQ": {
@@ -660,8 +660,8 @@
         "isPlaceholder": false
       },
       "rolePlayProficiency": {
-        "rating": null,
-        "remarks": null,
+        "rating": "PASS",
+        "remarks": "The foundation is there. Gaps to close, but you've earned your place.",
         "isPlaceholder": false
       }
     }
