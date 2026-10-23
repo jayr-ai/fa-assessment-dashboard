@@ -3,12 +3,12 @@
     "id": "benjamin-hext",
     "name": "Benjamin Hext 🚀🌱",
     "email": "yodex2021@gmail.com",
-    "overallRating": "MASTERY IN MOTION",
-    "overallRemarks": "You are not there yet. Go back, do the work, and re-sit.",
+    "overallRating": "DISTINCTION",
+    "overallRemarks": "You are ready!",
     "callIQScore": 100,
     "totalQuizScore": 98.33333333333333,
-    "rolePlayScore": null,
-    "overallScore": 49.33333333333333,
+    "rolePlayScore": 84.5,
+    "overallScore": 91.58333333333333,
     "accountProvisioned": true,
     "cards": {
       "callIQ": {
@@ -22,8 +22,8 @@
         "isPlaceholder": false
       },
       "rolePlayProficiency": {
-        "rating": null,
-        "remarks": null,
+        "rating": "PASS",
+        "remarks": "The foundation is there. Gaps to close, but you've earned your place.",
         "isPlaceholder": false
       }
     }
