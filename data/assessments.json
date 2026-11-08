@@ -496,12 +496,12 @@
     "id": "mieke-boer",
     "name": "Mieke Boer 🚀🌱💫",
     "email": "mieke.boer@icloud.com",
-    "overallRating": "MASTERY IN MOTION",
-    "overallRemarks": "You are not there yet. Go back, do the work, and re-sit.",
+    "overallRating": "DISTINCTION",
+    "overallRemarks": "You are ready!",
     "callIQScore": 100,
     "totalQuizScore": 100,
-    "rolePlayScore": null,
-    "overallScore": 50,
+    "rolePlayScore": 75.5,
+    "overallScore": 87.75,
     "accountProvisioned": true,
     "cards": {
       "callIQ": {
@@ -515,8 +515,8 @@
         "isPlaceholder": false
       },
       "rolePlayProficiency": {
-        "rating": null,
-        "remarks": null,
+        "rating": "PASS",
+        "remarks": "The foundation is there. Gaps to close, but you've earned your place.",
         "isPlaceholder": false
       }
     }
