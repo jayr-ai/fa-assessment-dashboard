@@ -380,12 +380,12 @@
     "id": "krystal-hille",
     "name": "Krystal Hille 🚀",
     "email": "krystal@hillehouse.org",
-    "overallRating": "MASTERY IN MOTION",
-    "overallRemarks": "You are not there yet. Go back, do the work, and re-sit.",
+    "overallRating": "DISTINCTION",
+    "overallRemarks": "You are ready!",
     "callIQScore": 100,
     "totalQuizScore": 98.33333333333333,
-    "rolePlayScore": null,
-    "overallScore": 49.33333333333333,
+    "rolePlayScore": 86.5,
+    "overallScore": 92.58333333333333,
     "accountProvisioned": true,
     "cards": {
       "callIQ": {
@@ -399,8 +399,8 @@
         "isPlaceholder": false
       },
       "rolePlayProficiency": {
-        "rating": null,
-        "remarks": null,
+        "rating": "DISTINCTION",
+        "remarks": "You performed like someone ready for a live prospect.",
         "isPlaceholder": false
       }
     }
