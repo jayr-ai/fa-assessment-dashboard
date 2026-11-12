@@ -441,9 +441,9 @@
     "overallRating": "MASTERY IN MOTION",
     "overallRemarks": "You are not there yet. Go back, do the work, and re-sit.",
     "callIQScore": 100,
-    "totalQuizScore": 79.16666666666666,
+    "totalQuizScore": 87.5,
     "rolePlayScore": null,
-    "overallScore": 41.66666666666666,
+    "overallScore": 45,
     "accountProvisioned": true,
     "cards": {
       "callIQ": {
@@ -452,8 +452,8 @@
         "isPlaceholder": false
       },
       "acceleratorCheck": {
-        "rating": "PASS",
-        "remarks": "You understand the system. Solid foundation to build on.",
+        "rating": "DISTINCTION",
+        "remarks": "You didn't just watch it. You absorbed it.",
         "isPlaceholder": false
       },
       "rolePlayProficiency": {
