@@ -728,12 +728,12 @@
     "id": "sam-basheer",
     "name": "Sam Basheer 🚀🌱",
     "email": "social@samwell.co",
-    "overallRating": "MASTERY IN MOTION",
-    "overallRemarks": "You are not there yet. Go back, do the work, and re-sit.",
+    "overallRating": "DISTINCTION",
+    "overallRemarks": "You are ready!",
     "callIQScore": 100,
     "totalQuizScore": 96.66666666666667,
-    "rolePlayScore": null,
-    "overallScore": 48.666666666666664,
+    "rolePlayScore": 81,
+    "overallScore": 89.16666666666666,
     "accountProvisioned": true,
     "cards": {
       "callIQ": {
@@ -747,8 +747,8 @@
         "isPlaceholder": false
       },
       "rolePlayProficiency": {
-        "rating": null,
-        "remarks": null,
+        "rating": "PASS",
+        "remarks": "The foundation is there. Gaps to close, but you've earned your place.",
         "isPlaceholder": false
       }
     }
